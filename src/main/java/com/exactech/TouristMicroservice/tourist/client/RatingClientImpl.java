@@ -14,7 +14,7 @@ public class RatingClientImpl implements RatingClient{
 
     @Autowired
     public RatingClientImpl(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8084/api/v1").build();
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8081/api/v1").build();
     }
 
     @Override
@@ -28,6 +28,20 @@ public class RatingClientImpl implements RatingClient{
                     .block();
         }
         catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<RatingDto> findAllRatings() {
+        try {
+            return webClient.get()
+                    .uri("/rating")
+                    .retrieve()
+                    .bodyToFlux(RatingDto.class)
+                    .collectList()
+                    .block();
+        } catch (Exception e) {
             return null;
         }
     }

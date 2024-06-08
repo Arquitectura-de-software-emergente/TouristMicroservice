@@ -15,4 +15,5 @@ public interface TouristService {
 
     //connect to rating service
     TouristResponse getRatingsByTouristId(Long touristId);
+    List<TouristResponse> getAllTouristRatings();
 }

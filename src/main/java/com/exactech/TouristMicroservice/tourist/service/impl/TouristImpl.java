@@ -7,12 +7,11 @@ import com.exactech.TouristMicroservice.tourist.http.TouristResponse;
 import com.exactech.TouristMicroservice.tourist.model.Tourist;
 import com.exactech.TouristMicroservice.tourist.repository.TouristRepository;
 import com.exactech.TouristMicroservice.tourist.service.TouristService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TouristImpl implements TouristService {
@@ -20,15 +19,8 @@ public class TouristImpl implements TouristService {
     private TouristRepository touristRepository;
 
     @Autowired
-    private RatingClient _ratingClient;
+    private RatingClient ratingClient;
 
-    private final ModelMapper modelMapper;
-
-    @Autowired
-    public TouristImpl(TouristRepository touristRepository, ModelMapper modelMapper) {
-        this.touristRepository = touristRepository;
-        this.modelMapper = new ModelMapper();
-    }
     @Override
     public Tourist createTourist(Tourist tourist) {
         return touristRepository.save(tourist);
@@ -78,7 +70,7 @@ public class TouristImpl implements TouristService {
     @Override
     public TouristResponse getRatingsByTouristId(Long touristId) {
         Tourist tourist = touristRepository.findById(touristId).orElse(new Tourist());
-        List<RatingDto> ratingsDto = _ratingClient.findRatingsByTouristId(touristId);
+        List<RatingDto> ratingsDto = ratingClient.findRatingsByTouristId(touristId);
         return TouristResponse.builder()
                 .id(tourist.getId())
                 .name(tourist.getName())
@@ -87,5 +79,25 @@ public class TouristImpl implements TouristService {
                 .address(tourist.getAddress())
                 .ratingsDtoList(ratingsDto)
                 .build();
+    }
+
+    @Override
+    public List<TouristResponse> getAllTouristRatings() {
+        List<Tourist> tourists = getAllTourists();
+        List<RatingDto> allRatings = ratingClient.findAllRatings();
+
+        return tourists.stream().map(tourist -> {
+            List<RatingDto> touristRatings = allRatings.stream()
+                    .filter(rating -> rating.getTouristId() == tourist.getId())
+                    .collect(Collectors.toList());
+            return TouristResponse.builder()
+                    .id(tourist.getId())
+                    .name(tourist.getName())
+                    .email(tourist.getEmail())
+                    .phone(tourist.getPhone())
+                    .address(tourist.getAddress())
+                    .ratingsDtoList(touristRatings)
+                    .build();
+        }).collect(Collectors.toList());
     }
 }

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RatingClient {
     List<RatingDto> findRatingsByTouristId(Long touristId);
+    List<RatingDto> findAllRatings();
 }

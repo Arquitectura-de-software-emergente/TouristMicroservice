@@ -21,3 +21,5 @@ public class TouristResponse {
     private String address;
     private List<RatingDto> ratingsDtoList;
 }
+
+// Response to list all tourists with their ratings
