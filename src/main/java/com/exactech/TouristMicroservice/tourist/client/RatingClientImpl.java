@@ -14,7 +14,7 @@ public class RatingClientImpl implements RatingClient{
 
     @Autowired
     public RatingClientImpl(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8084/api/v1").build();
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8080/api/v1/rating").build();
     }
 
     @Override
