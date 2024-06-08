@@ -1,6 +1,7 @@
 package com.exactech.TouristMicroservice.tourist.controller;
 
-import com.exactech.TouristMicroservice.tourist.http.TouristResponse;
+import com.exactech.TouristMicroservice.tourist.http.TouristRatingResponse;
+import com.exactech.TouristMicroservice.tourist.http.TouristReservationResponse;
 import com.exactech.TouristMicroservice.tourist.model.Tourist;
 import com.exactech.TouristMicroservice.tourist.service.TouristService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +48,19 @@ public class TouristController {
 
     // Endpoint to get ratings by tourist id
     @GetMapping("/ratings/{touristId}")
-    public ResponseEntity<TouristResponse> getRatingsByTouristId(@PathVariable Long touristId) {
+    public ResponseEntity<TouristRatingResponse> getRatingsByTouristId(@PathVariable Long touristId) {
         return ResponseEntity.ok(touristService.getRatingsByTouristId(touristId));
     }
 
     // Endpoint to get all tourist ratings
     @GetMapping("/ratings")
-    public ResponseEntity<List<TouristResponse>> getAllTouristRatings() {
+    public ResponseEntity<List<TouristRatingResponse>> getAllTouristRatings() {
         return ResponseEntity.ok(touristService.getAllTouristRatings());
     }
 
+    // Endpoint to get reservations by tourist id
+    @GetMapping("/reservations/{touristId}")
+    public ResponseEntity<TouristReservationResponse> getReservationsByTouristId(@PathVariable Long touristId) {
+        return ResponseEntity.ok(touristService.getReservationsByTouristId(touristId));
+    }
 }

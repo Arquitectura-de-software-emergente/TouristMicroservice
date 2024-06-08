@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TouristResponse {
+public class TouristRatingResponse {
     private Long id;
     private String name;
     private String email;

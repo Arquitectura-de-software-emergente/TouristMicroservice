@@ -1,5 +1,6 @@
-package com.exactech.TouristMicroservice.tourist.client;
+package com.exactech.TouristMicroservice.tourist.client.implementation;
 
+import com.exactech.TouristMicroservice.tourist.client.RatingClient;
 import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
 
 @Service
-public class RatingClientImpl implements RatingClient{
+public class RatingClientImpl implements RatingClient {
 
     private final WebClient webClient;
 

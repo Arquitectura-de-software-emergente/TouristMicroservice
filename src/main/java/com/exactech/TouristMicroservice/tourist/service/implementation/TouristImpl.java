@@ -1,9 +1,12 @@
-package com.exactech.TouristMicroservice.tourist.service.impl;
+package com.exactech.TouristMicroservice.tourist.service.implementation;
 
 import com.exactech.TouristMicroservice.shared.exception.ResourceNotFoundException;
 import com.exactech.TouristMicroservice.tourist.client.RatingClient;
+import com.exactech.TouristMicroservice.tourist.client.ReservationClient;
 import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
-import com.exactech.TouristMicroservice.tourist.http.TouristResponse;
+import com.exactech.TouristMicroservice.tourist.dto.ReservationDto;
+import com.exactech.TouristMicroservice.tourist.http.TouristRatingResponse;
+import com.exactech.TouristMicroservice.tourist.http.TouristReservationResponse;
 import com.exactech.TouristMicroservice.tourist.model.Tourist;
 import com.exactech.TouristMicroservice.tourist.repository.TouristRepository;
 import com.exactech.TouristMicroservice.tourist.service.TouristService;
@@ -20,6 +23,9 @@ public class TouristImpl implements TouristService {
 
     @Autowired
     private RatingClient ratingClient;
+
+    @Autowired
+    private ReservationClient reservationClient;
 
     @Override
     public Tourist createTourist(Tourist tourist) {
@@ -68,10 +74,10 @@ public class TouristImpl implements TouristService {
     }
 
     @Override
-    public TouristResponse getRatingsByTouristId(Long touristId) {
+    public TouristRatingResponse getRatingsByTouristId(Long touristId) {
         Tourist tourist = touristRepository.findById(touristId).orElse(new Tourist());
         List<RatingDto> ratingsDto = ratingClient.findRatingsByTouristId(touristId);
-        return TouristResponse.builder()
+        return TouristRatingResponse.builder()
                 .id(tourist.getId())
                 .name(tourist.getName())
                 .email(tourist.getEmail())
@@ -82,7 +88,7 @@ public class TouristImpl implements TouristService {
     }
 
     @Override
-    public List<TouristResponse> getAllTouristRatings() {
+    public List<TouristRatingResponse> getAllTouristRatings() {
         List<Tourist> tourists = getAllTourists();
         List<RatingDto> allRatings = ratingClient.findAllRatings();
 
@@ -90,7 +96,7 @@ public class TouristImpl implements TouristService {
             List<RatingDto> touristRatings = allRatings.stream()
                     .filter(rating -> rating.getTouristId() == tourist.getId())
                     .collect(Collectors.toList());
-            return TouristResponse.builder()
+            return TouristRatingResponse.builder()
                     .id(tourist.getId())
                     .name(tourist.getName())
                     .email(tourist.getEmail())
@@ -99,5 +105,19 @@ public class TouristImpl implements TouristService {
                     .ratingsDtoList(touristRatings)
                     .build();
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public TouristReservationResponse getReservationsByTouristId(Long touristId) {
+        Tourist tourist = touristRepository.findById(touristId).orElse(new Tourist());
+        List<ReservationDto> reservationDto = reservationClient.findReservationsByTouristId(touristId);
+        return TouristReservationResponse.builder()
+                .id(tourist.getId())
+                .name(tourist.getName())
+                .email(tourist.getEmail())
+                .phone(tourist.getPhone())
+                .address(tourist.getAddress())
+                .reservationsDtoList(reservationDto)
+                .build();
     }
 }
