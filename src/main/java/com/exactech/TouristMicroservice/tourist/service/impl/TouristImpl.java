@@ -1,7 +1,9 @@
 package com.exactech.TouristMicroservice.tourist.service.impl;
 
 import com.exactech.TouristMicroservice.shared.exception.ResourceNotFoundException;
-import com.exactech.TouristMicroservice.tourist.dto.TouristDto;
+import com.exactech.TouristMicroservice.tourist.client.RatingClient;
+import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
+import com.exactech.TouristMicroservice.tourist.http.TouristResponse;
 import com.exactech.TouristMicroservice.tourist.model.Tourist;
 import com.exactech.TouristMicroservice.tourist.repository.TouristRepository;
 import com.exactech.TouristMicroservice.tourist.service.TouristService;
@@ -16,6 +18,10 @@ import java.util.Optional;
 public class TouristImpl implements TouristService {
     @Autowired
     private TouristRepository touristRepository;
+
+    @Autowired
+    private RatingClient _ratingClient;
+
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -69,7 +75,17 @@ public class TouristImpl implements TouristService {
         }
     }
 
-    private TouristDto EntityToDto(Tourist tourist){
-        return modelMapper.map(tourist, TouristDto.class);
+    @Override
+    public TouristResponse getRatingsByTouristId(Long touristId) {
+        Tourist tourist = touristRepository.findById(touristId).orElse(new Tourist());
+        List<RatingDto> ratingsDto = _ratingClient.findRatingsByTouristId(touristId);
+        return TouristResponse.builder()
+                .id(tourist.getId())
+                .name(tourist.getName())
+                .email(tourist.getEmail())
+                .phone(tourist.getPhone())
+                .address(tourist.getAddress())
+                .ratingsDtoList(ratingsDto)
+                .build();
     }
 }
