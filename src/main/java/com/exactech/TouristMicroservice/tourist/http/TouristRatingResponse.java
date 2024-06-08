@@ -1,7 +1,6 @@
 package com.exactech.TouristMicroservice.tourist.http;
 
 import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TouristResponse {
+public class TouristRatingResponse {
     private Long id;
     private String name;
     private String email;

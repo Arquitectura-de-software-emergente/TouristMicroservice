@@ -1,18 +1,20 @@
-package com.exactech.TouristMicroservice.tourist.service.impl;
+package com.exactech.TouristMicroservice.tourist.service.implementation;
 
 import com.exactech.TouristMicroservice.shared.exception.ResourceNotFoundException;
 import com.exactech.TouristMicroservice.tourist.client.RatingClient;
+import com.exactech.TouristMicroservice.tourist.client.ReservationClient;
 import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
-import com.exactech.TouristMicroservice.tourist.http.TouristResponse;
+import com.exactech.TouristMicroservice.tourist.dto.ReservationDto;
+import com.exactech.TouristMicroservice.tourist.http.TouristRatingResponse;
+import com.exactech.TouristMicroservice.tourist.http.TouristReservationResponse;
 import com.exactech.TouristMicroservice.tourist.model.Tourist;
 import com.exactech.TouristMicroservice.tourist.repository.TouristRepository;
 import com.exactech.TouristMicroservice.tourist.service.TouristService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TouristImpl implements TouristService {
@@ -20,15 +22,11 @@ public class TouristImpl implements TouristService {
     private TouristRepository touristRepository;
 
     @Autowired
-    private RatingClient _ratingClient;
-
-    private final ModelMapper modelMapper;
+    private RatingClient ratingClient;
 
     @Autowired
-    public TouristImpl(TouristRepository touristRepository, ModelMapper modelMapper) {
-        this.touristRepository = touristRepository;
-        this.modelMapper = new ModelMapper();
-    }
+    private ReservationClient reservationClient;
+
     @Override
     public Tourist createTourist(Tourist tourist) {
         return touristRepository.save(tourist);
@@ -76,16 +74,50 @@ public class TouristImpl implements TouristService {
     }
 
     @Override
-    public TouristResponse getRatingsByTouristId(Long touristId) {
+    public TouristRatingResponse getRatingsByTouristId(Long touristId) {
         Tourist tourist = touristRepository.findById(touristId).orElse(new Tourist());
-        List<RatingDto> ratingsDto = _ratingClient.findRatingsByTouristId(touristId);
-        return TouristResponse.builder()
+        List<RatingDto> ratingsDto = ratingClient.findRatingsByTouristId(touristId);
+        return TouristRatingResponse.builder()
                 .id(tourist.getId())
                 .name(tourist.getName())
                 .email(tourist.getEmail())
                 .phone(tourist.getPhone())
                 .address(tourist.getAddress())
                 .ratingsDtoList(ratingsDto)
+                .build();
+    }
+
+    @Override
+    public List<TouristRatingResponse> getAllTouristRatings() {
+        List<Tourist> tourists = getAllTourists();
+        List<RatingDto> allRatings = ratingClient.findAllRatings();
+
+        return tourists.stream().map(tourist -> {
+            List<RatingDto> touristRatings = allRatings.stream()
+                    .filter(rating -> rating.getTouristId() == tourist.getId())
+                    .collect(Collectors.toList());
+            return TouristRatingResponse.builder()
+                    .id(tourist.getId())
+                    .name(tourist.getName())
+                    .email(tourist.getEmail())
+                    .phone(tourist.getPhone())
+                    .address(tourist.getAddress())
+                    .ratingsDtoList(touristRatings)
+                    .build();
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public TouristReservationResponse getReservationsByTouristId(Long touristId) {
+        Tourist tourist = touristRepository.findById(touristId).orElse(new Tourist());
+        List<ReservationDto> reservationDto = reservationClient.findReservationsByTouristId(touristId);
+        return TouristReservationResponse.builder()
+                .id(tourist.getId())
+                .name(tourist.getName())
+                .email(tourist.getEmail())
+                .phone(tourist.getPhone())
+                .address(tourist.getAddress())
+                .reservationsDtoList(reservationDto)
                 .build();
     }
 }
