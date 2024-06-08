@@ -1,6 +1,5 @@
 package com.exactech.TouristMicroservice.tourist.service;
 
-import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
 import com.exactech.TouristMicroservice.tourist.http.TouristResponse;
 import com.exactech.TouristMicroservice.tourist.model.Tourist;
 

@@ -1,7 +1,6 @@
 package com.exactech.TouristMicroservice.tourist.http;
 
 import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +20,3 @@ public class TouristResponse {
     private String address;
     private List<RatingDto> ratingsDtoList;
 }
-
-// Response to list all tourists with their ratings
