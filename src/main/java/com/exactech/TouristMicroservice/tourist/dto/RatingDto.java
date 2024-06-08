@@ -1,5 +1,6 @@
 package com.exactech.TouristMicroservice.tourist.dto;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,12 +8,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class TouristDto {
-    private Long id;
-    private String name;
-    private String email;
-    private String phone;
-    private String address;
+@NoArgsConstructor
+public class RatingDto {
+    private int score;
+    private Date creationDate;
+    private int touristId;
+    private int tripId;
 }

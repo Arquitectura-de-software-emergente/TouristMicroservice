@@ -1,5 +1,7 @@
 package com.exactech.TouristMicroservice.tourist.service;
 
+import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
+import com.exactech.TouristMicroservice.tourist.http.TouristResponse;
 import com.exactech.TouristMicroservice.tourist.model.Tourist;
 
 import java.util.List;
@@ -10,4 +12,7 @@ public interface TouristService {
     List<Tourist> getAllTourists();
     Tourist updateTourist(Tourist tourist, Long id);
     void deleteTourist(Long id);
+
+    //connect to rating service
+    TouristResponse getRatingsByTouristId(Long touristId);
 }
