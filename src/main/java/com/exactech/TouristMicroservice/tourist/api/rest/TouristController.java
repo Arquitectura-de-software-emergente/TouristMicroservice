@@ -1,9 +1,9 @@
-package com.exactech.TouristMicroservice.tourist.controller;
+package com.exactech.TouristMicroservice.tourist.api.rest;
 
-import com.exactech.TouristMicroservice.tourist.http.TouristRatingResponse;
-import com.exactech.TouristMicroservice.tourist.http.TouristReservationResponse;
-import com.exactech.TouristMicroservice.tourist.model.Tourist;
-import com.exactech.TouristMicroservice.tourist.service.TouristService;
+import com.exactech.TouristMicroservice.tourist.resource.TouristRatingResponse;
+import com.exactech.TouristMicroservice.tourist.resource.TouristReservationResponse;
+import com.exactech.TouristMicroservice.tourist.domain.model.Tourist;
+import com.exactech.TouristMicroservice.tourist.domain.service.TouristService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

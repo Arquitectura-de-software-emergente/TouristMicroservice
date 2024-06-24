@@ -1,8 +1,8 @@
-package com.exactech.TouristMicroservice.tourist.service;
+package com.exactech.TouristMicroservice.tourist.domain.service;
 
-import com.exactech.TouristMicroservice.tourist.http.TouristRatingResponse;
-import com.exactech.TouristMicroservice.tourist.http.TouristReservationResponse;
-import com.exactech.TouristMicroservice.tourist.model.Tourist;
+import com.exactech.TouristMicroservice.tourist.resource.TouristRatingResponse;
+import com.exactech.TouristMicroservice.tourist.resource.TouristReservationResponse;
+import com.exactech.TouristMicroservice.tourist.domain.model.Tourist;
 
 import java.util.List;
 

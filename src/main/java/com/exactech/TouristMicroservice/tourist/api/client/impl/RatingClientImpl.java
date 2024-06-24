@@ -1,7 +1,7 @@
-package com.exactech.TouristMicroservice.tourist.client.implementation;
+package com.exactech.TouristMicroservice.tourist.api.client.impl;
 
-import com.exactech.TouristMicroservice.tourist.client.RatingClient;
-import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
+import com.exactech.TouristMicroservice.tourist.api.client.RatingClient;
+import com.exactech.TouristMicroservice.tourist.mapping.dto.RatingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

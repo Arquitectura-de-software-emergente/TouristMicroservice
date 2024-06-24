@@ -1,4 +1,4 @@
-package com.exactech.TouristMicroservice.tourist.model;
+package com.exactech.TouristMicroservice.tourist.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

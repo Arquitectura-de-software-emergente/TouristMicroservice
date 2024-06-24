@@ -1,4 +1,4 @@
-package com.exactech.TouristMicroservice.tourist.dto;
+package com.exactech.TouristMicroservice.tourist.mapping.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

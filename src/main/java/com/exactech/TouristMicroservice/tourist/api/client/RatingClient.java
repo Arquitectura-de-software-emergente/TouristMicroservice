@@ -1,6 +1,6 @@
-package com.exactech.TouristMicroservice.tourist.client;
+package com.exactech.TouristMicroservice.tourist.api.client;
 
-import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
+import com.exactech.TouristMicroservice.tourist.mapping.dto.RatingDto;
 
 import java.util.List;
 

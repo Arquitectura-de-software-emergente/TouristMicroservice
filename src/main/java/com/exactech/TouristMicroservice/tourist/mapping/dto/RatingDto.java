@@ -1,4 +1,4 @@
-package com.exactech.TouristMicroservice.tourist.dto;
+package com.exactech.TouristMicroservice.tourist.mapping.dto;
 
 import java.util.Date;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package com.exactech.TouristMicroservice.tourist.http;
+package com.exactech.TouristMicroservice.tourist.resource;
 
-import com.exactech.TouristMicroservice.tourist.dto.ReservationDto;
+import com.exactech.TouristMicroservice.tourist.mapping.dto.RatingDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TouristReservationResponse {
+public class TouristRatingResponse {
     private Long id;
     private String name;
     private String email;
     private String phone;
     private String address;
-    private List<ReservationDto> reservationsDtoList;
+    private List<RatingDto> ratingsDtoList;
 }

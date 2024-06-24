@@ -1,15 +1,15 @@
-package com.exactech.TouristMicroservice.tourist.service.implementation;
+package com.exactech.TouristMicroservice.tourist.service;
 
 import com.exactech.TouristMicroservice.shared.exception.ResourceNotFoundException;
-import com.exactech.TouristMicroservice.tourist.client.RatingClient;
-import com.exactech.TouristMicroservice.tourist.client.ReservationClient;
-import com.exactech.TouristMicroservice.tourist.dto.RatingDto;
-import com.exactech.TouristMicroservice.tourist.dto.ReservationDto;
-import com.exactech.TouristMicroservice.tourist.http.TouristRatingResponse;
-import com.exactech.TouristMicroservice.tourist.http.TouristReservationResponse;
-import com.exactech.TouristMicroservice.tourist.model.Tourist;
-import com.exactech.TouristMicroservice.tourist.repository.TouristRepository;
-import com.exactech.TouristMicroservice.tourist.service.TouristService;
+import com.exactech.TouristMicroservice.tourist.api.client.RatingClient;
+import com.exactech.TouristMicroservice.tourist.api.client.ReservationClient;
+import com.exactech.TouristMicroservice.tourist.mapping.dto.RatingDto;
+import com.exactech.TouristMicroservice.tourist.mapping.dto.ReservationDto;
+import com.exactech.TouristMicroservice.tourist.resource.TouristRatingResponse;
+import com.exactech.TouristMicroservice.tourist.resource.TouristReservationResponse;
+import com.exactech.TouristMicroservice.tourist.domain.model.Tourist;
+import com.exactech.TouristMicroservice.tourist.domain.persistance.TouristRepository;
+import com.exactech.TouristMicroservice.tourist.domain.service.TouristService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
