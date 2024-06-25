@@ -3,8 +3,10 @@ package com.exactech.TouristMicroservice.tourist.service;
 import com.exactech.TouristMicroservice.shared.exception.ResourceNotFoundException;
 import com.exactech.TouristMicroservice.tourist.api.client.RatingClient;
 import com.exactech.TouristMicroservice.tourist.api.client.ReservationClient;
+import com.exactech.TouristMicroservice.tourist.config.JwtUtil;
 import com.exactech.TouristMicroservice.tourist.mapping.dto.RatingDto;
 import com.exactech.TouristMicroservice.tourist.mapping.dto.ReservationDto;
+import com.exactech.TouristMicroservice.tourist.resource.LoginResponse;
 import com.exactech.TouristMicroservice.tourist.resource.TouristRatingResponse;
 import com.exactech.TouristMicroservice.tourist.resource.TouristReservationResponse;
 import com.exactech.TouristMicroservice.tourist.domain.model.Tourist;
@@ -15,11 +17,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class TouristImpl implements TouristService {
     @Autowired
     private TouristRepository touristRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     private RatingClient ratingClient;
@@ -41,6 +46,19 @@ public class TouristImpl implements TouristService {
             throw new ResourceNotFoundException("Tourist not found with id " + id);
         }
     }
+
+    @Override
+    public LoginResponse authenticate(String email, String password) {
+        Optional<Tourist> touristOptional = touristRepository.findByEmail(email);
+        if (touristOptional.isPresent() && touristOptional.get().getPassword().equals(password)) {
+            Tourist tourist = touristOptional.get();
+            String token = jwtUtil.generateToken(tourist.getEmail());  // Asume que jwtUtil es inyectado o creado en algún lugar de tu servicio.
+            return new LoginResponse(true, "Authentication successful", tourist, token);
+        }
+        return new LoginResponse(false, "Invalid credentials", null, null);
+    }
+
+
 
     @Override
     public List<Tourist> getAllTourists() {

@@ -1,10 +1,13 @@
 package com.exactech.TouristMicroservice.tourist.api.rest;
 
+import com.exactech.TouristMicroservice.tourist.mapping.dto.LoginDto;
+import com.exactech.TouristMicroservice.tourist.resource.LoginResponse;
 import com.exactech.TouristMicroservice.tourist.resource.TouristRatingResponse;
 import com.exactech.TouristMicroservice.tourist.resource.TouristReservationResponse;
 import com.exactech.TouristMicroservice.tourist.domain.model.Tourist;
 import com.exactech.TouristMicroservice.tourist.domain.service.TouristService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +42,18 @@ public class TouristController {
     public void deleteTourist(@PathVariable Long id){
         touristService.deleteTourist(id);
     }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
+        LoginResponse loginResponse = touristService.authenticate(loginDto.email, loginDto.password);
+        if (loginResponse.isSuccess()) {
+            return ResponseEntity.ok(loginResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse);
+        }
+    }
+
 
     //Endpoint to get tourist by id
     @GetMapping("/{id}")
