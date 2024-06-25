@@ -15,8 +15,9 @@ import java.util.List;
 public class TouristRatingResponse {
     private Long id;
     private String name;
-    private String email;
     private String phone;
     private String address;
+    private String email;
+    private String password;
     private List<RatingDto> ratingsDtoList;
 }

@@ -54,9 +54,10 @@ public class TouristImpl implements TouristService {
             Tourist existingTourist = existingTouristOptional.get();
             // Campos que se pueden actualizar
             existingTourist.setName(tourist.getName());
-            existingTourist.setEmail(tourist.getEmail());
             existingTourist.setPhone(tourist.getPhone());
             existingTourist.setAddress(tourist.getAddress());
+            existingTourist.setEmail(tourist.getEmail());
+            existingTourist.setPassword(tourist.getPassword());
 
             return touristRepository.save(existingTourist);
         } else {
@@ -80,9 +81,10 @@ public class TouristImpl implements TouristService {
         return TouristRatingResponse.builder()
                 .id(tourist.getId())
                 .name(tourist.getName())
-                .email(tourist.getEmail())
                 .phone(tourist.getPhone())
                 .address(tourist.getAddress())
+                .email(tourist.getEmail())
+                .password(tourist.getPassword())
                 .ratingsDtoList(ratingsDto)
                 .build();
     }
@@ -99,9 +101,10 @@ public class TouristImpl implements TouristService {
             return TouristRatingResponse.builder()
                     .id(tourist.getId())
                     .name(tourist.getName())
-                    .email(tourist.getEmail())
                     .phone(tourist.getPhone())
                     .address(tourist.getAddress())
+                    .email(tourist.getEmail())
+                    .password(tourist.getPassword())
                     .ratingsDtoList(touristRatings)
                     .build();
         }).collect(Collectors.toList());
@@ -114,9 +117,10 @@ public class TouristImpl implements TouristService {
         return TouristReservationResponse.builder()
                 .id(tourist.getId())
                 .name(tourist.getName())
-                .email(tourist.getEmail())
                 .phone(tourist.getPhone())
                 .address(tourist.getAddress())
+                .email(tourist.getEmail())
+                .password(tourist.getPassword())
                 .reservationsDtoList(reservationDto)
                 .build();
     }
